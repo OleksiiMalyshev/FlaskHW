@@ -23,4 +23,4 @@ def plus(a, b):
 def minus(a, b):
     return f"{a} - {b} = {int(a)-int(b)}"
 
-app.run(host='0.0.0.0', port=8085, debug=True)
+app.run(host='0.0.0.0', port=8080, debug=True)
