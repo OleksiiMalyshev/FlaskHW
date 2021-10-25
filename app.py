@@ -1,40 +1,13 @@
 from flask import Flask
-from flask import render_template
+from config import Config
 
 app = Flask(__name__)
 
+print(Config.WEATHER_API_KEY)
+print(Config.WEATHER_API_URL)
 
-@app.route('/', methods=["GET", "POST"])
-def index():
-    return 'Hello world'
+with app.app_context():
+    from routes.lecture1 import *
+    from routes.weather import *
 
-
-@app.route('/<a>/<b>/div')
-def division(a, b):
-    sign = '/'
-    answer = int(a) // int(b)
-    return render_template('answer.html', a=a, b=b, sign=sign, answer=answer)
-
-
-@app.route('/<a>/<b>/mult')
-def multiply(a, b):
-    sign = '*'
-    answer = int(a) * int(b)
-    return render_template('answer.html', a=a, b=b, sign=sign, answer=answer)
-
-
-@app.route('/<a>/<b>/plus')
-def plus(a, b):
-    sign = '+'
-    answer = int(a) + int(b)
-    return render_template('answer.html', a=a, b=b, sign=sign, answer=answer)
-
-
-@app.route('/<a>/<b>/minus')
-def minus(a, b):
-    sign = '-'
-    answer = int(a) - int(b)
-    return render_template('answer.html', a=a, b=b, sign=sign, answer=answer)
-
-
-app.run(host='0.0.0.0', port=8080, debug=True)
+app.run(debug=True)
