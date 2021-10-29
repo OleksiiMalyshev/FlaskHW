@@ -24,6 +24,9 @@
             dataType: "jsonp",
             success: function (location) {
                 $('#city').html(location.city);
+                if (location.city == "Kyiv"){
+                location.city = "Kiev";
+                }
                 $.ajax({
                     url: "/weather?city=" + location.city,
                     success: (response) => {
