@@ -23,11 +23,27 @@
             contentType: "application/json; charset=utf-8",
             success: (todos) => {
                 for (let el of todos) {
-                    $('#todoList').append("<li>" + el.title + "</br>" + el.text + "</li>");
+                    $('#todoList').append("<li>" + el.title + "</br>" + el.text +"<a href>" +"</li>");
                 }
             }
         });
     });
+</script>
+<div class="btn-group">
+        <button id="delete_all">Delete all todos</button>
+    </div>
+<script>
+$(document).on("click", '#delete_all', function() {
+  $('#todoList').each(function () {
+    $("li").remove();
+      });
+      $.ajax({
+          url: '/api/v1/todos',
+          type: 'DELETE',
+          dataType: 'json',
+          success: function(response){}
+  })
+});
 </script>
 </body>
 </html>
