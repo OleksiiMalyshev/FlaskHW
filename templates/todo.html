@@ -14,6 +14,8 @@
     <ul id="todoList"></ul>
 </div>
 <a href="/add-todo">Add new Todo</a>
+</br>
+<a href="/edit-todo">Edit the Todo</a>
 
 <script>
     $(document).ready(function () {
@@ -22,7 +24,13 @@
             type: "GET",
             contentType: "application/json; charset=utf-8",
             success: (todos) => {
-
+                $.each(todos, function(index, element){
+                    $('#todoList').append('<li>' + 'Post '+ index)
+                    $.each(element, function(key, value) {
+                        $("#todoList").append(value + '</br>');
+                    });
+                });
+                $('#todoList').append('</br>' + '</li>')
             }
         });
     });
@@ -32,15 +40,16 @@
     </div>
 <script>
 $(document).on("click", '#delete_all', function() {
-  $('#todoList').each(function () {
-    $("li").remove();
-      });
-      $.ajax({
-          url: '/api/v1/todos',
-          type: 'DELETE',
-          dataType: 'json',
-          success: function(response){}
-  })
+    $('#todoList').each(function () {
+        $("li").remove();
+    });
+    $.ajax({
+        url: '/api/v1/todos',
+        type: 'DELETE',
+        dataType: 'json',
+        success: function(response){
+        }
+    })
 });
 </script>
 </body>

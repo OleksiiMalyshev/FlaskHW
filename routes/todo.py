@@ -10,3 +10,7 @@ def todos_list():
 @app.route('/add-todo')
 def add_todo():
     return render_template('add-todo.html')
+
+@app.route('/edit-todo')
+def edit_todo():
+    return render_template('edit-todo.html')
