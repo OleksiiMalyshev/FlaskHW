@@ -5,7 +5,7 @@ services:
     build:
       context: ./
       dockerfile: docker/python/Dockerfile
-    container_name: 'flask-renee'
+    container_name: 'renee-montoya-app'
     env_file:
       - .env
     volumes:
