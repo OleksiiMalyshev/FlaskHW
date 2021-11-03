@@ -1,22 +1,26 @@
 from app import app, api
-from flask import request
+from flask import request, Response
 from flask_restful import Resource
 
-todos = []
-post_id = 0
+todos = {}
+todo_id = 0
 
 class Todo(Resource):
     def get(self):
-        return todos, post_id
+        return todos
 
     def post(self):
-        todos.append(request.json)
-        return todos, post_id
+        global todo_id
+        todos[todo_id] = response.json
+        todo_id += 1
+        return todos
 
     def delete(self):
-        todos.clear()
-        return todos, post_id
+        todos = {}
 
-
+class TodoId(Resource):
+    def get(self):
+        return todo_id
 
 api.add_resource(Todo, "/api/v1/todos")
+api.add_resource(TodoId, "/api/v1/todo_id")

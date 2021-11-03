@@ -22,9 +22,7 @@
             type: "GET",
             contentType: "application/json; charset=utf-8",
             success: (todos) => {
-                for (let el of todos) {
-                    $('#todoList').append("<li>" + el.title + "</br>" + el.text +"<a href>" +"</li>");
-                }
+
             }
         });
     });

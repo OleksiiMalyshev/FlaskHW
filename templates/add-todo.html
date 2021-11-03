@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 </head>
 <body>
 <form>
-    <label>Post</label>
+    <label id="post_id"></label>
     <div class="form-group">
         <label for="title">Title: </label>
         <input name="title" id="title" type="text">
@@ -40,6 +40,18 @@
             });
         });
     });
+</script>
+<script>
+    $(document.ready(function() {
+        $ajax({
+            url:"/api/v1/todo_id",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            success: (data){
+                $("#post_id").html("Post " + data)
+            }
+        })
+    })
 </script>
 </body>
 </html>
