@@ -12,8 +12,13 @@ class Todo(Resource):
 
     def post(self):
         global todo_id
+        print(request.json)
+        print(todos)
         if "idofpost" in request.json.keys():
-            if 'idofpost' not in todos.keys():
+            try:
+                if int(request.json[('idofpost')]) not in todos.keys():
+                    return todos
+            except ValueError:
                 return todos
             if 'idofpost' == '':
                 return todos
