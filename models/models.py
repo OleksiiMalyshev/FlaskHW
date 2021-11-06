@@ -92,3 +92,50 @@ class Employee(Model):
             element = self.get_by_id(self.id)
         except Exception:
             self.save_to_file(employees)
+
+class Salon(Model):
+    file = "salons.json"
+
+    def __init__(self, id, name, director_id, city, address):
+        try:
+            salon = self.get_by_id(id)
+            self.id = id
+            self.city = salon['city']
+            self.address = salon['address']
+            self.name = salon['name']
+            self.director_id = salon['director_id']
+        except Exception:
+            self.id = id
+            self.city = city
+            self.address = address
+            self.name = name
+            self.director_id = director_id
+            if self.director(self.director_id) is None:
+                del self
+                raise Exception(f"No emloyee with this id")
+
+    @staticmethod
+    def director(director_id):
+        try:
+            director = Employee.get_by_id(director_id)
+            return director
+        except Exception:
+            return None
+
+    def _generate_dict(self):
+        return {
+            'id': self.id,
+            'city': self.city,
+            'address': self.address,
+            'name': self.name,
+            'director_id': self.director_id
+        }
+
+    def save(self):
+        salon_in_dict_format = self._generate_dict()
+        salon = self.get_file_data(self.file)
+        salon.append(salon_in_dict_format)
+        try:
+            element = self.get_by_id(self.id)
+        except Exception:
+            self.save_to_file(salon)
