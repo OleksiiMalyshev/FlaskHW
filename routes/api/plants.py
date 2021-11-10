@@ -1,35 +1,38 @@
-from app import app, api
+from app import app, api, db
 from flask import request, Response
 from flask_restful import Resource
 from models import Plant
+from utils.helpers import convert_list
 
 
 class PlantResource(Resource):
     def get(self):
-        plants = Plant.get_all()
-        limit = int(request.args.get('limit', False))
-        if limit:
-            return plants[:limit]
-        return plants
+        plants = Plant.query.all()
+
+        return convert_list(plants)
 
     def post(self):
         data = request.json
-        plant = Plant(data['id'], data['location'], data['name'], data['director_id'])
-        plant.save()
-        return plant._generate_dict()
+        plant = Plant(location=data['location'], name=data['name'])
+        db.session.add(plant)
+        db.session.commit()
+        return plant.serialize
 
 
 class PlantSingleResource(Resource):
     def get(self, id):
-        return Plant.get_by_id(id)
+        plant = Plant.query.get(id)
+        return plant.serialize
 
-    def put(self, id):
-        data = request.json
-        Plant.update_by_id(id, data)
-        return Plant.get_by_id(id)
+    # def put(self, id):
+    #     data = request.json
+    #     Plant.update_by_id(id, data)
+    #     return Plant.get_by_id(id)
 
     def delete(self, id):
-        Plant.delete_by_id(id)
+        plant = Plant.query.get(id)
+        db.session.delete(plant)
+        db.session.commit()
         return "", 204
 
 
