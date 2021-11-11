@@ -16,7 +16,7 @@ def main():
 
 with app.app_context():
     from routes.api import *
-    from models import Plant, Employee
+    from models import Plant, Employee, Salon
 
     db.create_all()
 
