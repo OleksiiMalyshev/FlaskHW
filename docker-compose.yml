@@ -6,7 +6,6 @@ services:
       context: ./
       dockerfile: docker/python/Dockerfile
     container_name: 'renee-montoya-app'
-    command: ["./wait-for-it.sh", "db:3306", "--", "python", "app.py"]
     env_file:
       - .env
     volumes:
@@ -31,7 +30,12 @@ services:
       MYSQL_PASSWORD: flask
     networks:
       - app
+    volumes:
+      - db_data:/var/lib/mysql
 
 networks:
   app:
     driver: bridge
+
+volumes:
+  db_data:

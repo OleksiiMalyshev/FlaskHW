@@ -25,4 +25,4 @@ SQLAlchemy==1.4.26
 toml==0.10.2
 urllib3==1.26.7
 Werkzeug==2.0.2
-python-dotenv~=0.19.1
+pymysql

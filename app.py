@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 
@@ -8,12 +8,15 @@ app.config.from_object("config.Config")
 api = Api(app)
 db.init_app(app)
 
+
+@app.route('/')
+def main():
+    return render_template('index.html')
+
+
 with app.app_context():
-    from routes.main import *
-    from routes.api.plants import *
-    from routes.api.employees import *
-    from routes.api.salons import *
-    from models import Plant, Employee, Salon
+    from routes.api import *
+    from models import Plant, Employee
 
     db.create_all()
 

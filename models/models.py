@@ -59,30 +59,30 @@ class Employee(db.Model):
             'department_id': self.department_id
         }
 
-class Salon(db.Model):
-    __tablename__ = "salons"
+
+class MenuItem(db.Model):
+    __tablename__ = 'menu_items'
     id = db.Column(
         db.Integer,
         primary_key=True
     )
     name = db.Column(
-        db.String(255),
-        nullable=False
+        db.String(30),
+        nullable=False,
     )
-    city = db.Column(
-        db.String(255),
-        nullable=False
+    link = db.Column(
+        db.String(400),
+        nullable=False,
     )
-    address = db.Column(
-        db.String(255),
-        nullable=False
+    is_active = db.Column(
+        db.Boolean,
+        default=True
     )
-
+    
     @property
     def serialize(self):
         return {
             'id': self.id,
             'name': self.name,
-            'city': self.city,
-            'address': self.address
+            'link': self.link,
         }
