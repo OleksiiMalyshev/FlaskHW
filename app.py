@@ -13,11 +13,12 @@ db.init_app(app)
 with app.app_context():
     from routes.api.additional import *
     from routes.main import *
-    from models import Plant, Employee, MenuItem, Salon
+    from models import Plant, Employee, Salon, MenuItem
     from routes.api.plants import *
     from routes.api.employees import *
     from routes.api.salons import *
 
     db.create_all()
 
-app.run(debug=True, host="0.0.0.0", port=8080)
+if __name__ == '__main__':
+    app.run(debug=True, host="0.0.0.0", port=8080)
