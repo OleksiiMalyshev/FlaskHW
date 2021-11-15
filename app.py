@@ -9,14 +9,14 @@ api = Api(app)
 db.init_app(app)
 
 
-@app.route('/')
-def main():
-    return render_template('index.html')
-
 
 with app.app_context():
-    from routes.api import *
-    from models import Plant, Employee, Salon
+    from routes.api.additional import *
+    from routes.main import *
+    from models import Plant, Employee, MenuItem, Salon
+    from routes.api.plants import *
+    from routes.api.employees import *
+    from routes.api.salons import *
 
     db.create_all()
 

@@ -54,6 +54,7 @@ class Employee(db.Model):
     def serialize(self):
         return {
             'id': self.id,
+            'name':self.name,
             'email': self.email,
             'department_type': self.department_type,
             'department_id': self.department_id
@@ -78,7 +79,7 @@ class MenuItem(db.Model):
         db.Boolean,
         default=True
     )
-
+    
     @property
     def serialize(self):
         return {
@@ -86,7 +87,6 @@ class MenuItem(db.Model):
             'name': self.name,
             'link': self.link,
         }
-
 
 class Salon(db.Model):
     __tablename__ = "salons"
