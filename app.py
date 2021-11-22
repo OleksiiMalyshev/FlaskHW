@@ -1,22 +1,22 @@
 from flask import Flask, render_template
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
 app = Flask(__name__)
 app.config.from_object("config.Config")
 api = Api(app)
+migrate = Migrate(app, db)
+
+
 db.init_app(app)
 
 
-
 with app.app_context():
-    from routes.api.additional import *
+    from routes.api import *
     from routes.main import *
-    from models import Plant, Employee, Salon, MenuItem
-    from routes.api.plants import *
-    from routes.api.employees import *
-    from routes.api.salons import *
+    from models import Plant, Employee
 
     db.create_all()
 

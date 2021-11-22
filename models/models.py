@@ -1,3 +1,5 @@
+import json
+
 from app import db
 
 
@@ -16,12 +18,23 @@ class Plant(db.Model):
         nullable=False
     )
 
+    director_id = db.Column(
+        db.Integer,
+        db.ForeignKey('employees.id')
+    )
+
+    director = db.relationship("Employee", foreign_keys=[director_id])
+
+    def __repr__(self):
+        return json.dumps(self.serialize)
+
     @property
     def serialize(self):
         return {
             'id': self.id,
             'location': self.location,
-            'name': self.name
+            'name': self.name,
+            'director_id': self.director_id
         }
 
 
@@ -51,10 +64,19 @@ class Employee(db.Model):
     )
 
     @property
+    def department(self):
+        return Plant.query.get(self.department_id)
+
+    def __repr__(self):
+        return json.dumps(self.serialize)
+
+    def __str__(self):
+        return json.dumps(self.serialize)
+
+    @property
     def serialize(self):
         return {
             'id': self.id,
-            'name':self.name,
             'email': self.email,
             'department_type': self.department_type,
             'department_id': self.department_id
@@ -79,39 +101,11 @@ class MenuItem(db.Model):
         db.Boolean,
         default=True
     )
-    
+
     @property
     def serialize(self):
         return {
             'id': self.id,
             'name': self.name,
             'link': self.link,
-        }
-
-class Salon(db.Model):
-    __tablename__ = "salons"
-    id = db.Column(
-        db.Integer,
-        primary_key=True
-    )
-    name = db.Column(
-        db.String(255),
-        nullable=False
-    )
-    city = db.Column(
-        db.String(255),
-        nullable=False
-    )
-    address = db.Column(
-        db.String(255),
-        nullable=False
-    )
-
-    @property
-    def serialize(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'city': self.city,
-            'address': self.address
         }

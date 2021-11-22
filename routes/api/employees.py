@@ -28,10 +28,16 @@ class EmployeeSingleResource(Resource):
         employee = Employee.query.get(id)
         return employee.serialize
 
-    # def put(self, id):
-    #     data = request.json
-    #     Employee.update_by_id(id, data)
-    #     return Employee.get_by_id(id)
+    def put(self, id):
+        data = request.json
+        employee = Employee.query.get(id)
+        employee.name = data['name'] if data.get('name', False) else employee.name
+        employee.email = data['email'] if data.get('email', False) else employee.email
+        employee.department_type = data['department_type'] if data.get('department_type', False) else employee.department_type
+        employee.department_id = data['department_id'] if data.get('department_id', False) else employee.department_id
+        db.session.add(employee)
+        db.session.commit()
+        return employee.serialize
 
     def delete(self, id):
         employee = Employee.query.get(id)
