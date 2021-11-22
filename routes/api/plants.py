@@ -13,7 +13,7 @@ class PlantResource(Resource):
 
     def post(self):
         data = request.json
-        plant = Plant(location=data['location'], name=data['name'], director_id=data['director_id'])
+        plant = Plant(location=data['location'], name=data['name'])
         db.session.add(plant)
         db.session.commit()
         return plant.serialize
@@ -22,20 +22,12 @@ class PlantResource(Resource):
 class PlantSingleResource(Resource):
     def get(self, id):
         plant = Plant.query.get(id)
-        print(plant)
         return plant.serialize
 
-
-    def put(self, id):
-        data = request.json
-        plant = Plant.query.get(id)
-        plant.name = data['name'] if data.get('name', False) else plant.name
-        plant.location = data['location'] if data.get('location', False) else plant.location
-        plant.director_id = data['director_id'] if data.get('director_id', False) else plant.director_id
-        db.session.add(plant)
-        db.session.commit()
-        return plant.serialize
-
+    # def put(self, id):
+    #     data = request.json
+    #     Plant.update_by_id(id, data)
+    #     return Plant.get_by_id(id)
 
     def delete(self, id):
         plant = Plant.query.get(id)

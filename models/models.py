@@ -1,5 +1,3 @@
-import json
-
 from app import db
 
 
@@ -18,23 +16,12 @@ class Plant(db.Model):
         nullable=False
     )
 
-    director_id = db.Column(
-        db.Integer,
-        db.ForeignKey('employees.id')
-    )
-
-    director = db.relationship("Employee", foreign_keys=[director_id])
-
-    def __repr__(self):
-        return json.dumps(self.serialize)
-
     @property
     def serialize(self):
         return {
             'id': self.id,
             'location': self.location,
-            'name': self.name,
-            'director_id': self.director_id
+            'name': self.name
         }
 
 
@@ -64,16 +51,6 @@ class Employee(db.Model):
     )
 
     @property
-    def department(self):
-        return Plant.query.get(self.department_id)
-
-    def __repr__(self):
-        return json.dumps(self.serialize)
-
-    def __str__(self):
-        return json.dumps(self.serialize)
-
-    @property
     def serialize(self):
         return {
             'id': self.id,
@@ -101,7 +78,7 @@ class MenuItem(db.Model):
         db.Boolean,
         default=True
     )
-
+    
     @property
     def serialize(self):
         return {
