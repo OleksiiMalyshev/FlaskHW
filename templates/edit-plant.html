@@ -11,18 +11,18 @@
                 <input class="form-control" name="name" id="name" value="{{ plant.name }}">
             </div>
             <div class="form-group">
-                <label for="location">location: </label>
+                <label for="location">Location: </label>
                 <input class="form-control" name="location" id="location" value="{{ plant.location }}">
             </div>
-            <br>
             <div class="form-group">
-                <select class="form-select" name="director_id" aria-label="Director">
+                <label for="director_id">Director: </label>
+                <select class="form-select" name="director_id" >
                     {% for employee in employees %}
                         <option value="{{ employee.id }}" {% if employee.id == plant.director_id %}} selected {% endif %}>{{ employee.name }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <br>
+
             <div class="btn-group">
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
