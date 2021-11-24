@@ -1,6 +1,15 @@
 version: "3"
 
 services:
+
+
+  nginx:
+    build: ./docker/nginx/
+    ports:
+      - "1337:80"
+    depends_on:
+      - app
+
   app:
     build:
       context: ./
@@ -11,7 +20,8 @@ services:
     volumes:
       - .:/application
     ports:
-      - "8080:8080"
+      - '5000:5000'
+    command: ./wait-for-it.sh db:3306 -- gunicorn --bind localhost:5000 manage:app
     networks:
       - app
     depends_on:
@@ -32,6 +42,7 @@ services:
       - app
     volumes:
       - db_data:/var/lib/mysql
+
 
 networks:
   app:

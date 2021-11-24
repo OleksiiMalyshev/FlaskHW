@@ -77,7 +77,6 @@ class Employee(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'name':self.name,
             'email': self.email,
             'department_type': self.department_type,
             'department_id': self.department_id
