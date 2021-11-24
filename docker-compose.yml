@@ -1,15 +1,6 @@
 version: "3"
 
 services:
-
-
-  nginx:
-    build: ./docker/nginx/
-    ports:
-      - "1337:80"
-    depends_on:
-      - app
-
   app:
     build:
       context: ./
@@ -19,11 +10,9 @@ services:
       - .env
     volumes:
       - .:/application
-    ports:
-      - '5000:5000'
-    command: ./wait-for-it.sh db:3306 -- gunicorn --bind localhost:5000 manage:app
-    networks:
-      - app
+    expose:
+      - 5000
+    command: gunicorn --bind 0.0.0.0:5000 manage:app
     depends_on:
       - db
 
@@ -38,15 +27,16 @@ services:
       MYSQL_DATABASE: flask
       MYSQL_USER: flask
       MYSQL_PASSWORD: flask
-    networks:
-      - app
     volumes:
       - db_data:/var/lib/mysql
 
-
-networks:
-  app:
-    driver: bridge
+  nginx:
+    build: ./docker/nginx/
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - app
 
 volumes:
   db_data:
