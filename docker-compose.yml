@@ -10,9 +10,10 @@ services:
       - .env
     volumes:
       - .:/application
-    expose:
-      - 5000
-    command: gunicorn --bind 0.0.0.0:5000 manage:app
+    ports:
+      - "8080:8080"
+    networks:
+      - app
     depends_on:
       - db
 
@@ -27,16 +28,25 @@ services:
       MYSQL_DATABASE: flask
       MYSQL_USER: flask
       MYSQL_PASSWORD: flask
+    networks:
+      - app
     volumes:
       - db_data:/var/lib/mysql
 
   nginx:
-    build: ./docker/nginx/
+    image: nginx:1.19-alpine
     ports:
-      - "80:80"
-      - "443:443"
+      - 8082:80
+    volumes:
+      - ./docker/nginx:/etc/nginx/conf.d
     depends_on:
       - app
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
 
 volumes:
   db_data:

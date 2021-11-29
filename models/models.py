@@ -49,6 +49,10 @@ class Employee(db.Model):
         nullable=False,
         unique=True
     )
+    password = db.Column(
+        db.String(255),
+        nullable=False
+    )
     name = db.Column(
         db.String(255),
         nullable=False,
@@ -78,6 +82,7 @@ class Employee(db.Model):
         return {
             'id': self.id,
             'email': self.email,
+            'name': self.name,
             'department_type': self.department_type,
             'department_id': self.department_id
         }
