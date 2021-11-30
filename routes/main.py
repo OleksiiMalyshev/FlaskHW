@@ -30,12 +30,6 @@ def auth():
           session['user'] = user.serialize
      return redirect("http://localhost:8082/")
 
-
-@app.route('/logout')
-def logout():
-     session.pop('user')
-     return redirect(url_for('main'))
-
 @app.route('/plant/<int:id>/edit')
 def plant_edit_page(id):
      if session.get('user') is None:

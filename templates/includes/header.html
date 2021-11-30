@@ -11,7 +11,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     {% if session.get('user', False) %}
                         <div class="text-white">
-                            Hello, {{ session.get('user')['email'] }} <a href="/logout">Log out</a>
+                            Hello, {{ session.get('user')['email'] }}
                         </div>
                     {% else %}
                         <div class="login text-white">
